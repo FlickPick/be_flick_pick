@@ -43,7 +43,7 @@ describe "Users API", type: :request do
   it "can get one user by its id" do
     id = create(:user).id
     
-    get "/api/v1/users/#{id}"
+    get api_v1_user_path(id)
 
     user = JSON.parse(response.body, symbolize_names: true)
 
@@ -87,7 +87,7 @@ describe "Users API", type: :request do
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
   
-    post "/api/v1/users", headers: headers, params: JSON.generate(user: user_params)
+    post api_v1_users_path, headers: headers, params: JSON.generate(user: user_params)
     
     created_user = User.last
   
@@ -100,15 +100,15 @@ describe "Users API", type: :request do
     expect(created_user.password_digest).to eq(user_params[:password_digest])
   end
 
-  xit "can destroy an item" do
-    item = create(:item)
+  it "can destroy an user" do
+    user = create(:user)
   
-    expect(Item.count).to eq(1)
+    expect(User.count).to eq(1)
   
-    delete "/api/v1/items/#{item.id}"
+    delete api_v1_user_path(user.id)
   
     expect(response).to be_successful
-    expect(Item.count).to eq(0)
-    expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
+    expect(User.count).to eq(0)
+    expect{User.find(user.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
