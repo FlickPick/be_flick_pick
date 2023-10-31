@@ -100,6 +100,21 @@ describe "Users API", type: :request do
     expect(created_user.password_digest).to eq(user_params[:password_digest])
   end
 
+  it "can update an existing user" do
+    id = create(:user).id
+    previous_name = User.last.name
+    user_params = { name: "P. Sherman" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+  
+    patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
+
+    user = User.find_by(id: id)
+  
+    expect(response).to be_successful
+    expect(user.name).to_not eq(previous_name)
+    expect(user.name).to eq("P. Sherman")
+  end
+
   it "can destroy an user" do
     user = create(:user)
   

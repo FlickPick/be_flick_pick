@@ -17,6 +17,15 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def update
+    user = User.find(params[:id])
+    if user.update(user_params)
+      render json: UserSerializer.new(user)
+    else
+      render json: { errors: user.errors.full_messages }, status: 400
+    end
+  end
+
   def destroy
     render json: User.delete(params[:id])
   end
