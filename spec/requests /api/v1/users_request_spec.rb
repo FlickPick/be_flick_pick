@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-describe "Users API" do
+describe "Users API", type: :request do
   it "sends a list of users" do
     create_list(:user, 5)
 
-    get '/api/v1/users'
+    get api_v1_users_path
 
     expect(response).to be_successful
 
