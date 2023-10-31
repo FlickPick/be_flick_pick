@@ -23,13 +23,13 @@ describe "Users API" do
       expect(user[:attributes]).to have_key(:name)
       expect(user[:attributes][:name]).to be_a(String)
 
-      expect(user[:attributes]).to have_key(:description)
+      expect(user[:attributes]).to have_key(:email)
       expect(user[:attributes][:email]).to be_a(String)
 
       expect(user[:attributes]).to have_key(:role)
       expect(user[:attributes][:role]).to be_a(Integer)
 
-      expect(user[:attributes]).to have_key(:password_digest)
+      expect(user[:attributes]).to have_key(:language_pref)
       expect(user[:attributes][:language_pref]).to be_a(Integer)
 
       expect(user[:attributes]).to have_key(:movie_history)
