@@ -9,7 +9,7 @@ describe "Parties API", type: :request do
     expect(response).to be_successful
 
     parties = JSON.parse(response.body, symbolize_names: true)
-    
+
     expect(parties[:data].count).to eq(5)
 
     parties[:data].each do |party|
@@ -44,5 +44,47 @@ describe "Parties API", type: :request do
       expect(party[:attributes]).to have_key(:movie_id)
       expect(party[:attributes][:movie_id]).to be_a(Integer)
     end
+  end
+
+  it "can get one party by its id" do
+    id = create(:party).id
+    
+    get api_v1_party_path(id)
+
+    party = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+    
+    expect(party).to have_key(:data)
+    expect(party[:data]).to be_a(Hash)
+    
+    expect(party[:data]).to have_key(:id)
+    expect(party[:data][:id]).to be_an(String)
+
+    expect(party[:data]).to have_key(:attributes)
+
+    expect(party[:data][:attributes]).to have_key(:access_code)
+    expect(party[:data][:attributes][:access_code]).to be_a(String)
+
+    expect(party[:data][:attributes]).to have_key(:max_rating)
+    expect(party[:data][:attributes][:max_rating]).to be_a(Integer)
+
+    expect(party[:data][:attributes]).to have_key(:max_duration)
+    expect(party[:data][:attributes][:max_duration]).to be_a(Integer)
+
+    expect(party[:data][:attributes]).to have_key(:genres)
+    expect(party[:data][:attributes][:genres]).to be_a(String)
+
+    expect(party[:data][:attributes]).to have_key(:services)
+    expect(party[:data][:attributes][:services]).to be_a(String)
+
+    expect(party[:data][:attributes]).to have_key(:languages)
+    expect(party[:data][:attributes][:languages]).to be_a(String)
+
+    expect(party[:data][:attributes]).to have_key(:format)
+    expect(party[:data][:attributes][:format]).to be_a(Integer)
+
+    expect(party[:data][:attributes]).to have_key(:movie_id)
+    expect(party[:data][:attributes][:movie_id]).to be_a(Integer)
   end
 end
