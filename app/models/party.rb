@@ -1,4 +1,4 @@
-class Party < ApplicaitonRecord
+class Party < ApplicationRecord
   validates :access_code, presence: true, uniqueness: true
   validates :max_rating, presence: true
   validates :max_duration, presence: true
