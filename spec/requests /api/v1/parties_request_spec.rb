@@ -115,4 +115,19 @@ describe "Parties API", type: :request do
     expect(created_party.format).to eq(party_params[:format])
     expect(created_party.movie_id).to eq(party_params[:movie_id])
   end
+
+  it "can update an existing party" do
+    id = create(:party).id
+    previous_genres = Party.last.genres
+    party_params = { genres: "Horror" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+  
+    patch api_v1_party_path(id), headers: headers, params: JSON.generate({party: party_params})
+
+    party = Party.find_by(id: id)
+  
+    expect(response).to be_successful
+    expect(party.genres).to_not eq(previous_genres)
+    expect(party.genres).to eq("Horror")
+  end
 end
