@@ -130,4 +130,16 @@ describe "Parties API", type: :request do
     expect(party.genres).to_not eq(previous_genres)
     expect(party.genres).to eq("Horror")
   end
+
+  it "can destroy an party" do
+    party = create(:party)
+  
+    expect(Party.count).to eq(1)
+  
+    delete api_v1_party_path(party.id)
+  
+    expect(response).to be_successful
+    expect(Party.count).to eq(0)
+    expect{Party.find(party.id)}.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
