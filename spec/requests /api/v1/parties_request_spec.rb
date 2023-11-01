@@ -87,4 +87,32 @@ describe "Parties API", type: :request do
     expect(party[:data][:attributes]).to have_key(:movie_id)
     expect(party[:data][:attributes][:movie_id]).to be_a(Integer)
   end
+
+  it "can create a new party" do
+    party_params = ({
+                    :access_code=>"r4ze7o",
+                    :max_rating=>4,
+                    :max_duration=>32,
+                    :genres=>"[\"labore\"]",
+                    :services=>"quis, dicta, sit",
+                    :languages=>"unde, architecto",
+                    :format=>0,
+                    :movie_id=>46364
+                  })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
+    
+    created_party = Party.last
+  
+    expect(response).to be_successful
+    expect(created_party.access_code).to eq(party_params[:access_code])
+    expect(created_party.max_rating).to eq(party_params[:max_rating])
+    expect(created_party.max_duration).to eq(party_params[:max_duration])
+    expect(created_party.genres).to eq(party_params[:genres])
+    expect(created_party.services).to eq(party_params[:services])
+    expect(created_party.languages).to eq(party_params[:languages])
+    expect(created_party.format).to eq(party_params[:format])
+    expect(created_party.movie_id).to eq(party_params[:movie_id])
+  end
 end
