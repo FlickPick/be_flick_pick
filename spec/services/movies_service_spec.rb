@@ -14,7 +14,6 @@ describe MoviesService do
 
     describe '#get_url' do
       it 'returns a faraday response', :vcr do
-        # require 'pry';binding.pry
         expect(@movie.get_url('/3/movie/36685')).to be_a Faraday::Response
       end
     end
@@ -25,8 +24,6 @@ describe MoviesService do
       it 'returns a movie details by movie_id', :vcr do
         rhps = @movie.movie(36685)
         pm = @movie.movie(128)
-
-        require 'pry';binding.pry
 
         expect(rhps).to be_a Hash
 

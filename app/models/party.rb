@@ -4,7 +4,5 @@ class Party < ApplicationRecord
   validates :max_duration, presence: true
   validates :genres, presence: true
   validates :services, presence: true
-  validates :languages, presence: true
-  validates :format, presence: true
   validates :movie_id, presence: true
 end
