@@ -10,8 +10,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      head 201
-      response.body = UserSerializer.new(User.last).to_json
+      render json: UserSerializer.new(user), status: :created
     else
       head 401
     end
