@@ -23,6 +23,7 @@ class MoviesService < ApplicationService
   ### Netflix watch_provider == 8
   ### Disney+ watch_provider == 337
 
+  # refactor this method to be our catch-all for party filtering
   def movies_by_services(watch_region, watch_providers, genres = nil, max_rating = nil, max_runtime = nil)
     require 'pry';binding.pry
     json_parse(
@@ -31,7 +32,7 @@ class MoviesService < ApplicationService
         req.params['sort_by'] = 'popularity.desc'
         req.params['watch_region'] = watch_region
         req.params['with_watch_providers'] = watch_providers
-        # req.params['with_runtime.lte'] = max_runitme if max_runtime
+        # req.params['with_runtime.lte'] = max_runtime if max_runtime
       end
     )
   end

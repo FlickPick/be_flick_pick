@@ -8,7 +8,7 @@ class Api::V1::PartiesController < ApplicationController
   end
 
   def create
-    party = Party.create(party_params)
+    party = Party.new(party_params)
     if party.save
       render json: PartySerializer.new(party), status: :created
     else
