@@ -1,0 +1,74 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/36685?api_key=<TMDB_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.11
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 01 Nov 2023 20:33:53 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=22917
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - fa67a8015309c236cc84b3ccec3fbaf9
+      X-Memc-Age:
+      - '3290'
+      X-Memc-Expires:
+      - '23733'
+      Etag:
+      - W/"e5c8155c38d9f3cad5f1241168fb2a23"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 16159e59796a2988cad1e260b170aa7e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - ORD51-C4
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - 1CZg3eui81I8bump9fn2LgA-hE6ksibvt-iSHXNzoDYeGe1b4mTLHQ==
+      Age:
+      - '63'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/5DU39tmUzbXtD6UXgm7iZqxpwoV.jpg","belongs_to_collection":{"id":694606,"name":"The
+        Rocky Horror Picture Show Collection","poster_path":"/aZJ0gncaRSywxR6yZLAeQYoDpkQ.jpg","backdrop_path":"/oPmhtP3C6rOkAJ55tcmCXOPFVOX.jpg"},"budget":1200000,"genres":[{"id":35,"name":"Comedy"},{"id":878,"name":"Science
+        Fiction"},{"id":14,"name":"Fantasy"},{"id":27,"name":"Horror"}],"homepage":"http://www.rockyhorror.com","id":36685,"imdb_id":"tt0073629","original_language":"en","original_title":"The
+        Rocky Horror Picture Show","overview":"Sweethearts Brad and Janet, stuck with
+        a flat tire during a storm, discover the eerie mansion of Dr. Frank-N-Furter,
+        a transvestite scientist. As their innocence is lost, Brad and Janet meet
+        a houseful of wild characters, including a rocking biker and a creepy butler.
+        Through elaborate dances and rock songs, Frank-N-Furter unveils his latest
+        creation: a muscular man named ''Rocky''.","popularity":23.479,"poster_path":"/3pyE6ZqDbuJi7zrNzzQzcKTWdmN.jpg","production_companies":[{"id":463,"logo_path":null,"name":"Michael
+        White Productions","origin_country":"GB"},{"id":25,"logo_path":"/qZCc1lty5FzX30aOCVRBLzaVmcp.png","name":"20th
+        Century Fox","origin_country":"US"}],"production_countries":[{"iso_3166_1":"GB","name":"United
+        Kingdom"},{"iso_3166_1":"US","name":"United States of America"}],"release_date":"1975-08-14","revenue":112892319,"runtime":99,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"A
+        different set of jaws.","title":"The Rocky Horror Picture Show","video":false,"vote_average":7.477,"vote_count":2588}'
+  recorded_at: Wed, 01 Nov 2023 20:34:56 GMT
+recorded_with: VCR 6.2.0
