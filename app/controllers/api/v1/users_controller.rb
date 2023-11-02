@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApplicationController
     if user.save
       render json: UserSerializer.new(user), status: :created
     else
-      head 401
+      
     end
   end
 
