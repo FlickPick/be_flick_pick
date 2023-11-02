@@ -20,8 +20,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
     t.integer "max_duration", default: -1
     t.string "genres"
     t.string "services"
-    t.string "languages"
-    t.integer "format"
     t.integer "movie_id", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,9 +39,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
     t.string "name"
     t.string "email"
     t.integer "role"
-    t.integer "language_pref"
     t.string "movie_history", default: ""
-    t.string "password_digest"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

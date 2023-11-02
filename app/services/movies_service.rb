@@ -10,6 +10,7 @@ class MoviesService < ApplicationService
   end
 
   ### Rocky Horror - 36685
+  ### Princess Mononoke - 128
 
   def movie(id)
     json_parse(
@@ -25,7 +26,7 @@ class MoviesService < ApplicationService
 
   # refactor this method to be our catch-all for party filtering
   def movies_by_services(watch_region, watch_providers, genres = nil, max_rating = nil, max_runtime = nil)
-    require 'pry';binding.pry
+    # require 'pry';binding.pry
     json_parse(
       # refactor this url to have more default queries
       conn.get('/3/discover/movie') do |req|
@@ -39,7 +40,7 @@ class MoviesService < ApplicationService
 
   # What we need from the API
     # Movie rating (#movie)
-    # Movie duration (#movie)
+    # Movie runtime (#movie)
     # Movie year released (#movie)
     # Movie language (#movie)
     # Movie title (#movie)

@@ -24,6 +24,9 @@ describe MoviesService do
     describe '#movie' do
       it 'returns a movie details by movie_id', :vcr do
         rhps = @movie.movie(36685)
+        pm = @movie.movie(128)
+
+        require 'pry';binding.pry
 
         expect(rhps).to be_a Hash
 
@@ -61,7 +64,6 @@ describe MoviesService do
         expect(netflix_and_disney).to be_a Hash
 
         expect(netflix_and_disney).to have_key :results
-        require 'pry';binding.pry
 
         expect(netflix).to_not eq(disney)
         expect(netflix).to_not eq(netflix_and_disney)
