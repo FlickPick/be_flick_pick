@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users
       resources :parties
-      resources :sessions
+      resources :sessions, only: [:create, :destroy]
     end
   end
 end

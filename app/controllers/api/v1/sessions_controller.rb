@@ -8,5 +8,3 @@ class Api::V1::SessionsController < ApplicationController
     end
   end
 end
-
-# {user_id: user.id},
