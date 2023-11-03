@@ -15,9 +15,10 @@ class Movie
   def rating(attributes)
     attributes[:release_dates][:results].find {|result| result[:iso_3166_1] == "US"}[:release_dates].find {|result| result[:certification] != ''}[:certification]
   end
-
+  
   def year_released(attributes)
-    attributes[:release_date].to_year
+    # attributes[:release_date].to_year
+    @year_released = attributes[:release_date]&.to_year
   end
 
   def to_year
