@@ -17,9 +17,7 @@ class Movie
   end
   
   def find_release_year(attributes)
-    # require 'pry';binding.pry
     to_year(attributes[:year_released])
-    # @year_released = attributes[:release_date]&.to_year
   end
 
   def to_year(date)
