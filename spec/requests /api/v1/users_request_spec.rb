@@ -20,6 +20,7 @@ describe "Users API", type: :request do
       expect(user[:id]).to be_an(String)
 
       expect(user).to have_key(:attributes)
+
       expect(user[:attributes]).to have_key(:name)
       expect(user[:attributes][:name]).to be_a(String)
 
@@ -29,14 +30,8 @@ describe "Users API", type: :request do
       expect(user[:attributes]).to have_key(:role)
       expect(user[:attributes][:role]).to be_a(Integer)
 
-      expect(user[:attributes]).to have_key(:language_pref)
-      expect(user[:attributes][:language_pref]).to be_a(Integer)
-
       expect(user[:attributes]).to have_key(:movie_history)
       expect(user[:attributes][:movie_history]).to be_a(String)
-
-      expect(user[:attributes]).to have_key(:password_digest)
-      expect(user[:attributes][:password_digest]).to be_a(String)
     end
   end
 
@@ -66,14 +61,8 @@ describe "Users API", type: :request do
     expect(user[:data][:attributes]).to have_key(:role)
     expect(user[:data][:attributes][:role]).to be_a(Integer)
 
-    expect(user[:data][:attributes]).to have_key(:language_pref)
-    expect(user[:data][:attributes][:language_pref]).to be_a(Integer)
-
     expect(user[:data][:attributes]).to have_key(:movie_history)
     expect(user[:data][:attributes][:movie_history]).to be_a(String)
-
-    expect(user[:data][:attributes]).to have_key(:password_digest)
-    expect(user[:data][:attributes][:password_digest]).to be_a(String)
   end
 
   it "can create a new user" do
@@ -81,9 +70,8 @@ describe "Users API", type: :request do
                     name: 'James Sullivan',
                     email: 'james.p.sullivan@aol.com',
                     role: 1,
-                    language_pref: 2,
                     movie_history: "Hocus Pocus, Star Wars, Spirited Away",
-                    password_digest: "gw45635yhethet5"
+                    password: "gw45635yhethet5"
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
   
@@ -95,21 +83,21 @@ describe "Users API", type: :request do
     expect(created_user.name).to eq(user_params[:name])
     expect(created_user.email).to eq(user_params[:email])
     expect(created_user.role).to eq(user_params[:role])
-    expect(created_user.language_pref).to eq(user_params[:language_pref])
     expect(created_user.movie_history).to eq(user_params[:movie_history])
-    expect(created_user.password_digest).to eq(user_params[:password_digest])
+    expect(created_user.password).to eq(user_params[:password_digest])
   end
 
   it "can update an existing user" do
     id = create(:user).id
     previous_name = User.last.name
+    password = User.last.password_digest
     user_params = { name: "P. Sherman" }
     headers = {"CONTENT_TYPE" => "application/json"}
   
     patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
 
     user = User.find_by(id: id)
-  
+# require 'pry';binding.pry
     expect(response).to be_successful
     expect(user.name).to_not eq(previous_name)
     expect(user.name).to eq("P. Sherman")

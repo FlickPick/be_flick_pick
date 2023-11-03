@@ -35,12 +35,6 @@ describe "Parties API", type: :request do
       expect(party[:attributes]).to have_key(:services)
       expect(party[:attributes][:services]).to be_a(String)
 
-      expect(party[:attributes]).to have_key(:languages)
-      expect(party[:attributes][:languages]).to be_a(String)
-
-      expect(party[:attributes]).to have_key(:format)
-      expect(party[:attributes][:format]).to be_a(Integer)
-
       expect(party[:attributes]).to have_key(:movie_id)
       expect(party[:attributes][:movie_id]).to be_a(Integer)
     end
@@ -78,12 +72,6 @@ describe "Parties API", type: :request do
     expect(party[:data][:attributes]).to have_key(:services)
     expect(party[:data][:attributes][:services]).to be_a(String)
 
-    expect(party[:data][:attributes]).to have_key(:languages)
-    expect(party[:data][:attributes][:languages]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:format)
-    expect(party[:data][:attributes][:format]).to be_a(Integer)
-
     expect(party[:data][:attributes]).to have_key(:movie_id)
     expect(party[:data][:attributes][:movie_id]).to be_a(Integer)
   end
@@ -95,8 +83,6 @@ describe "Parties API", type: :request do
                     :max_duration=>32,
                     :genres=>"[\"labore\"]",
                     :services=>"quis, dicta, sit",
-                    :languages=>"unde, architecto",
-                    :format=>0,
                     :movie_id=>46364
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
@@ -111,8 +97,6 @@ describe "Parties API", type: :request do
     expect(created_party.max_duration).to eq(party_params[:max_duration])
     expect(created_party.genres).to eq(party_params[:genres])
     expect(created_party.services).to eq(party_params[:services])
-    expect(created_party.languages).to eq(party_params[:languages])
-    expect(created_party.format).to eq(party_params[:format])
     expect(created_party.movie_id).to eq(party_params[:movie_id])
   end
 
