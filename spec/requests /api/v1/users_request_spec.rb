@@ -97,7 +97,7 @@ describe "Users API", type: :request do
     patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
 
     user = User.find_by(id: id)
-
+# require 'pry';binding.pry
     expect(response).to be_successful
     expect(user.name).to_not eq(previous_name)
     expect(user.name).to eq("P. Sherman")
