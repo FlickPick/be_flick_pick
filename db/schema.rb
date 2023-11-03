@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
     t.string "email"
     t.integer "role"
     t.string "movie_history", default: ""
-    t.string "password"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
