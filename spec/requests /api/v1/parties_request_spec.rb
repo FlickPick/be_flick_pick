@@ -78,7 +78,6 @@ describe "Parties API", type: :request do
 
   it "can create a new party" do
     party_params = ({
-                    :access_code=>"r4ze7o",
                     :max_rating=>4,
                     :max_duration=>32,
                     :genres=>"[\"labore\"]",
@@ -90,7 +89,7 @@ describe "Parties API", type: :request do
     post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
     
     created_party = Party.last
-  
+  require 'pry';binding.pry
     expect(response).to be_successful
     expect(created_party.access_code).to eq(party_params[:access_code])
     expect(created_party.max_rating).to eq(party_params[:max_rating])

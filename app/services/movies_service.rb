@@ -1,4 +1,5 @@
 class MoviesService < ApplicationService
+
   def conn
     Faraday.new(url: 'https://api.themoviedb.org') do |faraday|
       faraday.params['api_key'] = Rails.application.credentials.tmdb[:key]
@@ -20,19 +21,20 @@ class MoviesService < ApplicationService
     )
   end
 
-  ### US watch_region == US
-  ### Netflix watch_provider == 8
-  ### Disney+ watch_provider == 337
+  def cast(id)
+    json_parse(get_url("/3/movie/#{id}/credits"))[:cast][0..9]
+  end
 
   # refactor this method to be our catch-all for party filtering
   def movies_by_services(watch_region, watch_providers, genres = nil, max_rating = nil, max_runtime = nil)
-    # require 'pry';binding.pry
     json_parse(
       # refactor this url to have more default queries
       conn.get('/3/discover/movie') do |req|
         req.params['sort_by'] = 'popularity.desc'
         req.params['watch_region'] = watch_region
         req.params['with_watch_providers'] = watch_providers
+        # req.params['genres'] = genres if genres
+        # req.params['certification.lte'] = max_rating if max_rating
         # req.params['with_runtime.lte'] = max_runtime if max_runtime
       end
     )

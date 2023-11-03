@@ -10,6 +10,7 @@ class Api::V1::PartiesController < ApplicationController
   def create
     party = Party.new(party_params)
     if party.save
+      create_host(party)
       render json: PartySerializer.new(party), status: :created
     else
       head 401
@@ -32,6 +33,10 @@ class Api::V1::PartiesController < ApplicationController
   private
   
   def party_params
-    params.require(:party).permit(:access_code, :max_rating, :max_duration, :genres, :services, :format, :movie_id) 
+    params.require(:party).permit(:max_rating, :max_duration, :genres, :services, :movie_id) 
+  end
+
+  def create_host(party)
+    UserParty.create(party: party, user_id: params[:user_id], host: true)
   end
 end
