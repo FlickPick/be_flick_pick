@@ -1,8 +1,11 @@
 class Trailer 
-  attr_reader :name, :key
+  attr_reader :trailer
 
   def initialize(data)
-    @name = data[:name]
-    @key = data[:key]
+    @trailer = trailer_find(data)
+  end
+
+  def trailer_find(data)
+    data[:results].find{ |result| result[:type] == "Trailer" }[:key]
   end
 end

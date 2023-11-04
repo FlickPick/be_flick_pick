@@ -40,7 +40,8 @@ class MoviesService < ApplicationService
 
   def trailers(id)
     json_parse(
-      conn.get("/3/movie/#{id}/videos"))
+      get_url("/3/movie/#{id}/videos")
+    )
   end
 
   # What we need from the API
