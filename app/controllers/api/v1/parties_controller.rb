@@ -8,9 +8,9 @@ class Api::V1::PartiesController < ApplicationController
   end
 
   def create
-    party = Party.new(party_params)
+    party = Party.create!(party_params)
     if party.save
-      create_host(party)
+      # create_host(party)
       render json: PartySerializer.new(party), status: :created
     else
       head 401
