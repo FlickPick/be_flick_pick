@@ -5,7 +5,6 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-require 'faker'
 
 User.create(email: "reed@turing.edu", password: "Reed!12345", name: 'Reed', role: 1)
 User.create(email: "ethan@turing.edu", password: "Ethan!12345", name: 'Ethan', role: 1)
