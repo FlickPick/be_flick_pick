@@ -38,6 +38,11 @@ class MoviesService < ApplicationService
     )
   end
 
+  def trailers(id)
+    json_parse(
+      conn.get("/3/movie/#{id}/videos"))
+  end
+
   # What we need from the API
     # Movie rating (#movie)
     # Movie runtime (#movie)
