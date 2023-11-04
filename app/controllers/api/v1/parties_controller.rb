@@ -32,6 +32,6 @@ class Api::V1::PartiesController < ApplicationController
   private
   
   def party_params
-    params.require(:party).permit(:access_code, :max_rating, :max_duration, :genres, :services, :format, :movie_id) 
+    params.require(:party).permit(:access_code, :max_rating, :max_duration, :genres, :services, :movie_id) 
   end
 end
