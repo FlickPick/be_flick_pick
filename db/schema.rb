@@ -16,8 +16,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
 
   create_table "parties", force: :cascade do |t|
     t.string "access_code"
-    t.integer "max_rating", default: -1
-    t.integer "max_duration", default: -1
+    t.string "max_rating"
+    t.integer "max_duration"
     t.string "genres"
     t.string "services"
     t.integer "movie_id", default: 0
