@@ -68,5 +68,18 @@ describe MoviesService do
         expect(netflix_and_disney[:results].first).to eq(netflix[:results].first).or eq(disney[:results].first)
       end
     end
+
+    describe "#trailers" do 
+      it "should return trailers from a movie id", :vcr do 
+        trailers = @movie.trailers(550)
+
+        expect(trailers).to be_a(Hash)
+        expect(trailers).to have_key :results
+        results = trailers[:results]
+
+        expect(results.first).to have_key(:name)
+        expect(results.first).to have_key(:key)
+      end
+    end
   end
 end

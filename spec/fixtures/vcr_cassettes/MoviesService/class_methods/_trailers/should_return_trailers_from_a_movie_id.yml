@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/550/videos?api_key=<TMDB_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.11
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Fri, 03 Nov 2023 21:55:55 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=24274
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 58dcba9f8d3f1acfcf1c71cc01a05d0d
+      X-Memc-Age:
+      - '6115'
+      X-Memc-Expires:
+      - '16956'
+      Etag:
+      - W/"538166106bd0df7bc729bf6745329309"
+      Vary:
+      - Accept-Encoding
+      - Origin
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 3cb6f3f47d56232df6d6c959bb4ba486.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW57-P2
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - wJfpZRedWXGYAwklDFqn0ZcbJTVQ3vNrucSm6Xr16oALy4kd1cd6lA==
+      Age:
+      - '19497'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":550,"results":[{"iso_639_1":"en","iso_3166_1":"US","name":"20th
+        Anniversary Trailer","key":"dfeUzm6KF4g","site":"YouTube","size":1080,"type":"Trailer","official":true,"published_at":"2019-10-15T18:59:47.000Z","id":"64fb16fbdb4ed610343d72c3"},{"iso_639_1":"en","iso_3166_1":"US","name":"Theatrical
+        Trailer (HD Fan Remaster)","key":"6JnN1DmbqoU","site":"YouTube","size":1080,"type":"Trailer","official":false,"published_at":"2015-02-26T03:19:25.000Z","id":"653b36ba5907de00c4953699"},{"iso_639_1":"en","iso_3166_1":"US","name":"#TBT
+        Trailer","key":"BdJKm16Co6M","site":"YouTube","size":1080,"type":"Trailer","official":true,"published_at":"2014-10-02T19:20:22.000Z","id":"5c9294240e0a267cd516835f"}]}'
+  recorded_at: Sat, 04 Nov 2023 03:20:52 GMT
+recorded_with: VCR 6.2.0

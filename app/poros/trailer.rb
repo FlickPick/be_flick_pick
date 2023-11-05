@@ -1,11 +1,11 @@
-class Trailer
-  attr_reader
+class Trailer 
+  attr_reader :trailer
 
-  def initialize(attributes)
-    @trailer_path = find_trailer_path(attributes)
+  def initialize(data)
+    @trailer = trailer_find(data)
   end
 
-  def find_trailer_path(attributes)
-    attributes[:results].find {|result| result[:type] == "Trailer"}
+  def trailer_find(data)
+    data[:results].find{ |result| result[:type] == "Trailer" }[:key]
   end
 end
