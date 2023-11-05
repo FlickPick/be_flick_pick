@@ -1,5 +1,5 @@
 class Movie
-  attr_reader :rating, :runtime, :year_released, :language, :title, :poster_path, :genres
+  attr_reader :rating, :runtime, :year_released, :language, :title, :poster_path, :genres, :overview
 
   def initialize(attributes)
     @rating = find_rating(attributes)
@@ -9,6 +9,7 @@ class Movie
     @title = attributes[:title]
     @poster_path = attributes[:poster_path]
     @genres = attributes[:genres]
+    @overview = attributes[:overview]
   end
 
   ### REFACTOR ME!!! ALSO TEST ME!
