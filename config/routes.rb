@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resources :users
       resources :parties
       resources :sessions, only: [:create, :destroy]
+
+      mount ActionCable.server => '/cable'
     end
   end
 end
