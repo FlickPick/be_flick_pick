@@ -79,6 +79,20 @@ describe "Users API", type: :request do
     expect(created_user.password).to eq(user_params[:password_digest])
   end
 
+  it "sad path; will send an error if user is not created" do 
+    user_params = ({
+      name: "",
+      email: 'james.p.sullivan@aol.com',
+      role: 1,
+      password: "gw45635yhethet5"
+    })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post api_v1_users_path, headers: headers, params: JSON.generate(user: user_params)
+    expect(response).to_not be_successful 
+    expect(response).to have_http_status(401)
+  end
+
   it "can update an existing user" do
     id = create(:user).id
     previous_name = User.last.name
@@ -89,10 +103,22 @@ describe "Users API", type: :request do
     patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
 
     user = User.find_by(id: id)
-# require 'pry';binding.pry
     expect(response).to be_successful
     expect(user.name).to_not eq(previous_name)
     expect(user.name).to eq("P. Sherman")
+  end
+
+  it "sad path; will send an error if a user is not updated" do 
+    id = create(:user).id
+    previous_name = User.last.name
+    password = User.last.password_digest
+    user_params = { name: "" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+  
+    patch api_v1_user_path(id), headers: headers, params: JSON.generate({user: user_params})
+
+    expect(response).to_not be_successful
+    expect(response).to have_http_status(400)
   end
 
   it "can destroy an user" do

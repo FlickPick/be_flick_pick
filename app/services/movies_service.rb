@@ -44,11 +44,6 @@ class MoviesService < ApplicationService
     )
   end
 
-  def cast(id)
-    json_parse(
-      get_url("3/movie/#{id}/credits")
-    )
-  end
   # What we need from the API
     # Movie rating (#movie)
     # Movie runtime (#movie)
