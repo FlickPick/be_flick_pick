@@ -40,40 +40,29 @@ describe "Parties API", type: :request do
     end
   end
 
-  it "can get one party by its id" do
-    id = create(:party).id
+  it "can get one party by its id", :vcr do
+    id = create(:party, movie_id: 550).id
     
     get api_v1_party_path(id)
 
-    party = JSON.parse(response.body, symbolize_names: true)
+    data = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
-    
-    expect(party).to have_key(:data)
-    expect(party[:data]).to be_a(Hash)
-    
-    expect(party[:data]).to have_key(:id)
-    expect(party[:data][:id]).to be_an(String)
+    expect(data).to have_key(:party)
+    expect(data[:party]).to be_a(Hash)
 
-    expect(party[:data]).to have_key(:attributes)
+    expect(data).to have_key(:movie)
+    expect(data[:movie]).to have_key(:original_title)
+    expect(data[:movie][:original_title]).to be_a(String)
+    expect(data[:movie]).to have_key(:poster_path)
+    expect(data[:movie][:poster_path]).to be_a(String)
 
-    expect(party[:data][:attributes]).to have_key(:access_code)
-    expect(party[:data][:attributes][:access_code]).to be_a(String)
+    expect(data).to have_key(:cast)
+    expect(data[:cast]).to be_a(Hash)
+    expect(data[:cast][:names].length).to eq(5)
 
-    expect(party[:data][:attributes]).to have_key(:max_rating)
-    expect(party[:data][:attributes][:max_rating]).to be_a(Integer)
-
-    expect(party[:data][:attributes]).to have_key(:max_duration)
-    expect(party[:data][:attributes][:max_duration]).to be_a(Integer)
-
-    expect(party[:data][:attributes]).to have_key(:genres)
-    expect(party[:data][:attributes][:genres]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:services)
-    expect(party[:data][:attributes][:services]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:movie_id)
-    expect(party[:data][:attributes][:movie_id]).to be_a(Integer)
+    expect(data).to have_key(:trailer)
+    expect(data[:trailer]).to be_a(Hash)
   end
 
   it "can create a new party" do

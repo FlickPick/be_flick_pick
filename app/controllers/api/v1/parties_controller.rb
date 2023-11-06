@@ -4,7 +4,25 @@ class Api::V1::PartiesController < ApplicationController
   end
 
   def show
-    render json: PartySerializer.new(Party.find(params[:id]))
+    party = Party.find(params[:id])
+    movie_id = party.movie_id
+
+    movie_data = MoviesService.new.movie(movie_id)
+    cast_data = MoviesService.new.cast(movie_id)
+    trailer_data = MoviesService.new.trailers(movie_id)
+    if movie_data
+      render json: {
+      party: PartySerializer.new(party),
+      movie: {
+        original_title: movie_data[:original_title],
+        poster_path: movie_data[:poster_path] 
+      },
+      cast: Cast.new(cast_data),
+      trailer: Trailer.new(trailer_data)
+    }
+    else
+      render json: { error: 'No movie data' }, status: :not_found
+    end
   end
 
   def create
