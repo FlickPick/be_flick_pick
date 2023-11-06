@@ -1,4 +1,5 @@
 class Movie
+
   attr_reader :id, :rating, :runtime, :title, :poster_path, :genres
 
   def initialize(attributes)
@@ -12,6 +13,7 @@ class Movie
     
     # cast
     # summary
+
   end
 
   ### REFACTOR ME!!! ALSO TEST ME!

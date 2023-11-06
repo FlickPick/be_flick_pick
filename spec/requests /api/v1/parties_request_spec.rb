@@ -39,41 +39,30 @@ describe "Parties API", type: :request do
     end
   end
 
-  it "can get one party by its id" do
-    create_list(:user, 5)
-    id = create(:party).id
+  it "can get one party by its id", :vcr do
+    id = create(:party, movie_id: 550).id
     
     get api_v1_party_path(id)
 
-    party = JSON.parse(response.body, symbolize_names: true)
+    data = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
-    
-    expect(party).to have_key(:data)
-    expect(party[:data]).to be_a(Hash)
-    
-    expect(party[:data]).to have_key(:id)
-    expect(party[:data][:id]).to be_an(String)
+    expect(data).to have_key(:party)
+    expect(data[:party]).to be_a(Hash)
+    expect(data).to have_key(:movie)
+    expect(data[:movie]).to have_key(:original_title)
+    expect(data[:movie][:original_title]).to be_a(String)
+    expect(data[:movie]).to have_key(:poster_path)
+    expect(data[:movie][:poster_path]).to be_a(String)
 
-    expect(party[:data]).to have_key(:attributes)
+    expect(data).to have_key(:cast)
+    expect(data[:cast]).to be_an(Array)
 
-    expect(party[:data][:attributes]).to have_key(:access_code)
-    expect(party[:data][:attributes][:access_code]).to be_a(String)
+    expect(data[:cast].first).to have_key(:character)
+    expect(data[:cast].first).to have_key(:name)
 
-    expect(party[:data][:attributes]).to have_key(:max_rating)
-    expect(party[:data][:attributes][:max_rating]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:max_duration)
-    expect(party[:data][:attributes][:max_duration]).to be_a(Integer)
-
-    expect(party[:data][:attributes]).to have_key(:genres)
-    expect(party[:data][:attributes][:genres]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:services)
-    expect(party[:data][:attributes][:services]).to be_a(String)
-
-    expect(party[:data][:attributes]).to have_key(:movie_id)
-    expect(party[:data][:attributes][:movie_id]).to be_a(Integer)
+    expect(data).to have_key(:trailer)
+    expect(data[:trailer]).to be_a(Hash)
   end
 
   it "can create a new party" do
@@ -87,7 +76,6 @@ describe "Parties API", type: :request do
     headers = {"CONTENT_TYPE" => "application/json"}
 
     post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
-    # require 'pry';binding.pry
     created_party = Party.last
 
     expect(response).to be_successful
@@ -97,6 +85,22 @@ describe "Parties API", type: :request do
     expect(created_party.genres).to eq(party_params[:genres])
     expect(created_party.services).to eq(party_params[:services])
     expect(created_party.movie_id).to eq(party_params[:movie_id])
+  end
+
+  it "sad path; will send error if party is not created" do 
+    party_params = {
+      :max_rating=>"PG-13",
+      :genres=>"28|12",
+      :services=>"8|15",
+      :movie_id=>46364
+    }
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
+    created_party = Party.last
+
+    expect(response).to have_http_status(401)
   end
 
   it "can update an existing party" do
@@ -114,6 +118,17 @@ describe "Parties API", type: :request do
     expect(party.genres).to_not eq(previous_genres)
     expect(party.genres).to eq("Horror")
     expect(party.access_code).to eq(previous_access_code)
+  end
+
+  it "sad path; will send an error if the party was not updated" do 
+    id = create(:party).id
+    previous_genres = Party.last.genres
+    previous_access_code = Party.last.access_code
+    party_params = { genres: "" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+  
+    patch api_v1_party_path(id), headers: headers, params: JSON.generate({party: party_params})
+    expect(response).to have_http_status(400)
   end
 
   it "can destroy an party" do
