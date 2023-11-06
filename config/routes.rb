@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :temp_users, only: [:create, :index]
       resources :sessions, only: [:create, :destroy]
       resources :movies, only: [:index, :show]
+      resources :liked_movies, only: [:create]
     end
   end
 end
