@@ -1,5 +1,5 @@
 class Movie
-  attr_reader :rating, :runtime, :year_released, :language, :title, :poster_path, :genres, :overview
+  attr_reader :rating, :runtime, :year_released, :title, :poster_path, :genres, :overview
 
   def initialize(attributes)
     @rating = find_rating(attributes)
