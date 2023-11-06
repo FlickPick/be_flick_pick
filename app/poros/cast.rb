@@ -1,11 +1,8 @@
 class Cast 
-  attr_reader :names
+  attr_reader :character, :name
 
   def initialize(data)
-    @names = find_cast_names(data)
-  end
-
-  def find_cast_names(data)
-    data[:cast].take(5).map { |member| member[:name] }
+    @character = data[:character]
+    @name = data[:name]
   end
 end

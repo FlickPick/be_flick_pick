@@ -17,7 +17,7 @@ class Api::V1::PartiesController < ApplicationController
         original_title: movie_data[:original_title],
         poster_path: movie_data[:poster_path] 
       },
-      cast: Cast.new(cast_data),
+      cast: make_cast(cast_data),
       trailer: Trailer.new(trailer_data)
     }
     else
@@ -56,5 +56,11 @@ class Api::V1::PartiesController < ApplicationController
 
   def create_host(party)
     UserParty.create(party: party, user_id: params[:user_id], host: true)
+  end
+
+  def make_cast(cast_data)
+    cast_data[:cast].map do |cast_member|
+      Cast.new(character: cast_member[:character], name: cast_member[:name])
+    end
   end
 end

@@ -49,7 +49,6 @@ describe "Parties API", type: :request do
     expect(response).to be_successful
     expect(data).to have_key(:party)
     expect(data[:party]).to be_a(Hash)
-
     expect(data).to have_key(:movie)
     expect(data[:movie]).to have_key(:original_title)
     expect(data[:movie][:original_title]).to be_a(String)
@@ -57,8 +56,10 @@ describe "Parties API", type: :request do
     expect(data[:movie][:poster_path]).to be_a(String)
 
     expect(data).to have_key(:cast)
-    expect(data[:cast]).to be_a(Hash)
-    expect(data[:cast][:names].length).to eq(5)
+    expect(data[:cast]).to be_an(Array)
+
+    expect(data[:cast].first).to have_key(:character)
+    expect(data[:cast].first).to have_key(:name)
 
     expect(data).to have_key(:trailer)
     expect(data[:trailer]).to be_a(Hash)
