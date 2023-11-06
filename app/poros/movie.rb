@@ -1,13 +1,15 @@
 class Movie
-  attr_reader :rating, :runtime, :year_released, :title, :poster_path, :genres
+  attr_reader :id, :rating, :runtime, :title, :poster_path, :genres
 
   def initialize(attributes)
+    @id = attributes[:id]
     @rating = find_rating(attributes)
     @runtime = attributes[:runtime]
-    @year_released = find_release_year(attributes)
     @title = attributes[:title]
     @poster_path = attributes[:poster_path]
     @genres = attributes[:genres]
+    # @year_released = find_release_year(attributes)
+    
     # cast
     # summary
   end

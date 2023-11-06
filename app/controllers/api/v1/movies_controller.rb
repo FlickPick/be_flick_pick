@@ -1,6 +1,9 @@
 class Api::V1::MoviesController < ApplicationController
   def show
-    render json: MovieSerializer.new(make_movie(MoviesService.new.movie(params[:movie_id])))
+    render json: MovieSerializer.new(
+      make_movie(MoviesService.new
+                              .movie(
+                                params[:id])))
   end
 
   def index
