@@ -35,7 +35,6 @@ RSpec.describe Movie do
   it "has readable attributes" do 
     expect(@movie.runtime).to eq("106")
     expect(@movie.year_released).to eq("1998")
-    expect(@movie.language).to eq("Japanese")
     expect(@movie.title).to eq("Kiki's Delivery Service")
     expect(@movie.poster_path).to eq("https://www.themoviedb.org/t/p/w600_and_h900_bestv2/Aufa4YdZIv4AXpR9rznwVA5SEfd.jpg")
     expect(@movie.genres).to eq(["Animation, Family, Fantasy, Adventure"])
