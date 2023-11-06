@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :email
       t.integer :role
-      t.string :movie_history, default: ""
       t.string :password_digest
 
       t.timestamps

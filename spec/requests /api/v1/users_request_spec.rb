@@ -29,9 +29,6 @@ describe "Users API", type: :request do
 
       expect(user[:attributes]).to have_key(:role)
       expect(user[:attributes][:role]).to be_a(Integer)
-
-      expect(user[:attributes]).to have_key(:movie_history)
-      expect(user[:attributes][:movie_history]).to be_a(String)
     end
   end
 
@@ -60,9 +57,6 @@ describe "Users API", type: :request do
 
     expect(user[:data][:attributes]).to have_key(:role)
     expect(user[:data][:attributes][:role]).to be_a(Integer)
-
-    expect(user[:data][:attributes]).to have_key(:movie_history)
-    expect(user[:data][:attributes][:movie_history]).to be_a(String)
   end
 
   it "can create a new user" do
@@ -70,7 +64,6 @@ describe "Users API", type: :request do
                     name: 'James Sullivan',
                     email: 'james.p.sullivan@aol.com',
                     role: 1,
-                    movie_history: "Hocus Pocus, Star Wars, Spirited Away",
                     password: "gw45635yhethet5"
                   })
     headers = {"CONTENT_TYPE" => "application/json"}
@@ -83,7 +76,6 @@ describe "Users API", type: :request do
     expect(created_user.name).to eq(user_params[:name])
     expect(created_user.email).to eq(user_params[:email])
     expect(created_user.role).to eq(user_params[:role])
-    expect(created_user.movie_history).to eq(user_params[:movie_history])
     expect(created_user.password).to eq(user_params[:password_digest])
   end
 

@@ -1,6 +1,8 @@
 class Party < ApplicationRecord
   has_many :user_parties
   has_many :users, through: :user_parties
+  has_many :temp_users
+  has_many :liked_movies, through: :temp
 
   before_validation :generate_access_code
 

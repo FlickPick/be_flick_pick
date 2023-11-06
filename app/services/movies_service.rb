@@ -25,17 +25,15 @@ class MoviesService < ApplicationService
     json_parse(get_url("/3/movie/#{id}/credits"))[:cast][0..9]
   end
 
-  # refactor this method to be our catch-all for party filtering
-  def movies_by_services(watch_region, watch_providers, genres = nil, max_rating = nil, max_runtime = nil)
+  def movies_by_round(party_id, round)
+    party = Party.find(party_id)
     json_parse(
-      # refactor this url to have more default queries
-      conn.get('/3/discover/movie') do |req|
-        req.params['sort_by'] = 'popularity.desc'
-        req.params['watch_region'] = watch_region
-        req.params['with_watch_providers'] = watch_providers
-        # req.params['genres'] = genres if genres
-        # req.params['certification.lte'] = max_rating if max_rating
-        # req.params['with_runtime.lte'] = max_runtime if max_runtime
+      conn.get('/3/discover/movie?certification_country=US&include_adult=false&include_video=false&language=en-US&sort_by=popularity.desc&watch_region=US') do |req|
+        req.params['with_watch_providers'] = party.services if party.services
+        req.params['genres'] = party.genres if party.genres
+        req.params['certification.lte'] = party.max_rating if party.max_rating
+        req.params['with_runtime.lte'] = party.max_duration if party.max_duration
+        req.params['page'] = round if round
       end
     )
   end
@@ -53,5 +51,5 @@ class MoviesService < ApplicationService
     # Movie language (#movie)
     # Movie title (#movie)
     # Movie poster (#movie)
-    # Movie services (#movies_by_services)
+    # Movie services (#movies_by_round)
 end
