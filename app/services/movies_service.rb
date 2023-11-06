@@ -32,7 +32,7 @@ class MoviesService < ApplicationService
         req.params['with_watch_providers'] = party.services if party.services
         req.params['genres'] = party.genres if party.genres
         req.params['certification.lte'] = party.max_rating if party.max_rating
-        req.params['with_runtime.lte'] = party.max_runtime if party.max_runtime
+        req.params['with_runtime.lte'] = party.max_duration if party.max_duration
         req.params['page'] = round if round
       end
     )
