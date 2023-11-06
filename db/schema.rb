@@ -10,19 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_06_001032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "liked_movies", force: :cascade do |t|
+    t.bigint "temp_user_id", null: false
+    t.integer "movie_id"
+    t.integer "round"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["temp_user_id"], name: "index_liked_movies_on_temp_user_id"
+  end
+
   create_table "parties", force: :cascade do |t|
     t.string "access_code"
-    t.integer "max_rating", default: -1
-    t.integer "max_duration", default: -1
+    t.string "max_rating"
+    t.integer "max_duration"
     t.string "genres"
     t.string "services"
     t.integer "movie_id", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "temp_users", force: :cascade do |t|
+    t.string "name"
+    t.bigint "party_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id"], name: "index_temp_users_on_party_id"
   end
 
   create_table "user_parties", force: :cascade do |t|
@@ -39,12 +56,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_014828) do
     t.string "name"
     t.string "email"
     t.integer "role"
-    t.string "movie_history", default: ""
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "liked_movies", "temp_users"
+  add_foreign_key "temp_users", "parties"
   add_foreign_key "user_parties", "parties", column: "parties_id"
   add_foreign_key "user_parties", "users", column: "users_id"
 end

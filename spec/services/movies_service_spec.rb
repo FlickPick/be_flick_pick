@@ -44,19 +44,24 @@ describe MoviesService do
       end
     end
 
-    describe '#movies_by_services', :vcr do
-      it 'returns all movies by a single provider' do
-        netflix = @movie.movies_by_services('US', '8')
+    describe '#movies_by_round', :vcr do
+      it 'returns movies by a single provider based on given params' do
+        party_id = Party.create!(max_rating: "R", max_duration: "300", genres: "28|35", services: "8").id
+        netflix = @movie.movies_by_round(party_id, 1)
 
         expect(netflix).to be_a Hash
         
         expect(netflix).to have_key :results
       end
 
-      it 'returns all movies from multiple providers' do
-        netflix = @movie.movies_by_services('US', '8')
-        disney = @movie.movies_by_services('US', '337')
-        netflix_and_disney = @movie.movies_by_services('US', '8|337')
+      it 'returns movies from multiple providers based on given params' do
+        netflix_party_id = Party.create(max_rating: "R", max_duration: "300", genres: "28|35", services: "8").id
+        disney_party_id = Party.create(max_rating: "R", max_duration: "300", genres: "28|35", services: "337").id
+        netflix_and_disney_party_id = Party.create(max_rating: "R", max_duration: "300", genres: "28|35", services: "8|337").id
+
+        netflix = @movie.movies_by_round(netflix_party_id, 1)
+        disney = @movie.movies_by_round(disney_party_id, 1)
+        netflix_and_disney = @movie.movies_by_round(netflix_and_disney_party_id, 1)
 
         expect(netflix_and_disney).to be_a Hash
 
