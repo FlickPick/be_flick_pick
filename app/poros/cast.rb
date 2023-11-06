@@ -1,4 +1,4 @@
-class Cast
+class Cast 
   attr_reader :character, :name
 
   def initialize(data)
