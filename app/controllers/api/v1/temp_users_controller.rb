@@ -10,7 +10,7 @@ class Api::V1::TempUsersController < ApplicationController
   end
 
   def index
-    render json: TempUserSerializer.where('party_id = ?', params[:party_id])
+    render json: TempUserSerializer.new(TempUser.where('party_id = ?', params[:party_id]))
   end
 
   private

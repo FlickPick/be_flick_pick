@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :parties
       resources :temp_users, only: [:create, :index]
       resources :sessions, only: [:create, :destroy]
+      resources :movies, only: [:index, :show]
       resources :liked_movies, only: [:create, :index]
 
       mount ActionCable.server => '/cable'

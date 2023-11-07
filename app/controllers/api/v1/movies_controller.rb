@@ -1,10 +1,13 @@
 class Api::V1::MoviesController < ApplicationController
   def show
-    render json: MovieSerializer.new(make_movie(MoviesService.new.movie(params[:movie_id])))
+    render json: MovieSerializer.new(
+      make_movie(MoviesService.new
+                              .movie(
+                                params[:id])))
   end
 
-  def index(party_id, round)
-    render json: MovieSerializer.new(round_movies(party_id, round))
+  def index
+    render json: round_movies(params[:party_id], params[:round])
   end
 
   private
@@ -14,12 +17,12 @@ class Api::V1::MoviesController < ApplicationController
   end
 
   def round_movies(party_id, round)
-    find_round_movies(party_id, round).map do |movie_data|
-      make_movie(movie_data)
+    find_round_movies(party_id, round)[:results].map do |data|
+      data[:id]
     end
   end
 
   def find_round_movies(party_id, round)
-    MovieService.new.movies_by_round(party_id, round)
+    MoviesService.new.movies_by_round(party_id, round)
   end
-end
+end 

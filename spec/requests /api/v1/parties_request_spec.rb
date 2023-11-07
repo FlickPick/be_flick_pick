@@ -76,7 +76,6 @@ describe "Parties API", type: :request do
     headers = {"CONTENT_TYPE" => "application/json"}
 
     post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
-    # require 'pry';binding.pry
     created_party = Party.last
 
     expect(response).to be_successful
@@ -86,6 +85,22 @@ describe "Parties API", type: :request do
     expect(created_party.genres).to eq(party_params[:genres])
     expect(created_party.services).to eq(party_params[:services])
     expect(created_party.movie_id).to eq(party_params[:movie_id])
+  end
+
+  it "sad path; will send error if party is not created" do 
+    party_params = {
+      :max_rating=>"PG-13",
+      :genres=>"28|12",
+      :services=>"8|15",
+      :movie_id=>46364
+    }
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post api_v1_parties_path, headers: headers, params: JSON.generate(party: party_params)
+    created_party = Party.last
+
+    expect(response).to have_http_status(401)
   end
 
   it "can update an existing party" do
@@ -103,6 +118,17 @@ describe "Parties API", type: :request do
     expect(party.genres).to_not eq(previous_genres)
     expect(party.genres).to eq("Horror")
     expect(party.access_code).to eq(previous_access_code)
+  end
+
+  it "sad path; will send an error if the party was not updated" do 
+    id = create(:party).id
+    previous_genres = Party.last.genres
+    previous_access_code = Party.last.access_code
+    party_params = { genres: "" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+  
+    patch api_v1_party_path(id), headers: headers, params: JSON.generate({party: party_params})
+    expect(response).to have_http_status(400)
   end
 
   it "can destroy an party" do

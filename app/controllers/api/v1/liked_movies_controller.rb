@@ -5,12 +5,12 @@ class Api::V1::LikedMoviesController < ApplicationController
   end
 
   def index
-    render json: LikedMovieSerializer.new(LikedMovie.join(:temp_user).where('temp_user.party_id': params[:party_id]))
+    render json: LikedMovieSerializer.new(LikedMovie.joins(:temp_user).where('temp_users.party_id': params[:party_id]))
   end
 
   private
 
   def liked_movie_params
-    params.require(:liked_movie).permit(:movie_id, :round)
+    params.require(:like_data).permit(:movie_id, :round, :temp_user_id)
   end
 end
