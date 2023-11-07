@@ -6,6 +6,10 @@ class Api::V1::PartiesController < ApplicationController
   end
 
   def show
+    render json: PartySerializer.new(Party.find(params[:id]))
+  end
+
+  def details
     party = Party.find(params[:id])
     movie_id = party.movie_id
 

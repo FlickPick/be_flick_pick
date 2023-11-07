@@ -4,8 +4,8 @@ class Api::V1::LikedMoviesController < ApplicationController
     head 401 unless liked_movie.save
   end
 
-  def liked_movies_by_party
-    render json: LikedMovieSerializer.new(LikedMovie.where(party_id: params[:party_id]))
+  def index
+    render json: LikedMovieSerializer.new(LikedMovie.joins(:temp_user).where('temp_users.party_id': params[:party_id]))
   end
 
   private
