@@ -6,24 +6,28 @@ class Api::V1::PartiesController < ApplicationController
   end
 
   def show
-    party = Party.find(params[:id])
-    movie_id = party.movie_id
-
-    movie_data = MoviesService.new.movie(movie_id)
-    cast_data = MoviesService.new.cast(movie_id)
-    trailer_data = MoviesService.new.trailers(movie_id)
-    if movie_data
-      render json: {
-        party: PartySerializer.new(party),
-        movie: {
-          original_title: movie_data[:original_title],
-          poster_path: movie_data[:poster_path] 
-        },
-        cast: make_cast(cast_data),
-        trailer: Trailer.new(trailer_data)
-      }
-    end
+    render json: PartySerializer.new(Party.find(params[:id]))
   end
+
+  # def show
+  #   party = Party.find(params[:id])
+  #   movie_id = party.movie_id
+
+  #   movie_data = MoviesService.new.movie(movie_id)
+  #   cast_data = MoviesService.new.cast(movie_id)
+  #   trailer_data = MoviesService.new.trailers(movie_id)
+  #   if movie_data
+  #     render json: {
+  #       party: PartySerializer.new(party),
+  #       movie: {
+  #         original_title: movie_data[:original_title],
+  #         poster_path: movie_data[:poster_path] 
+  #       },
+  #       cast: make_cast(cast_data),
+  #       trailer: Trailer.new(trailer_data)
+  #     }
+  #   end
+  # end
 
   def create
     party = Party.create!(party_params)
