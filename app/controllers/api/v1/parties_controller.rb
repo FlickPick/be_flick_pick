@@ -37,8 +37,8 @@ class Api::V1::PartiesController < ApplicationController
 
   def update
     party = Party.find(params[:id])
-    if party.update(party_params)
-      render json: PartySerializer.new(party)
+    if party.update(movie_id: params[:movie_id])
+      render json: PartySerializer.new(party), status: 201
     else
       render json: { errors: party.errors.full_messages }, status: 400
     end

@@ -7,10 +7,12 @@ class SelectionChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  # def recieve(data)
-  #   party = Party.find(params[:party_id])
-  #   liked_movies = party.liked_movies    
-  # end
+
+  def recieve(data)
+    party = Party.find(params[:party_id])
+    liked_movies = party.liked_movies    
+  end
+
 
   def select_movie(movie)
     if all_users_selected_same_movie?
