@@ -10,3 +10,5 @@ User.create(email: "reed@turing.edu", password: "Reed!12345", name: 'Reed', role
 User.create(email: "ethan@turing.edu", password: "Ethan!12345", name: 'Ethan', role: 1)
 User.create(email: "tommy@turing.edu", password: "Tommy!12345", name: 'Tommy', role: 1)
 User.create(email: "joop@turing.edu", password: "Joop!12345", name: 'Joop', role: 1)
+
+Party.create(access_code: "012345", max_rating: "r", max_duration: 300, genres: "28", services: "337")
