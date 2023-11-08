@@ -11,7 +11,6 @@ class Party < ApplicationRecord
   validates :max_duration, presence: true
   validates :genres, presence: true
   validates :services, presence: true
-  validates :movie_id, presence: true
 
   private
 
