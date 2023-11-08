@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       resources :movies, only: [:index, :show]
       resources :liked_movies, only: [:create, :index]
+
+      mount ActionCable.server => '/cable'
     end
   end
 end
