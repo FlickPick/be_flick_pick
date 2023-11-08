@@ -1,6 +1,7 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'chat_channel'
+    # require 'pry';binding.pry
+    stream_from "chat_channel_#{params['room']}"
   end
 
   def send_message
@@ -12,8 +13,9 @@ class ChatChannel < ApplicationCable::Channel
       user[:name]
     end
     # require 'pry';binding.pry
-    broadcast_data = { message: party_users }
-    ActionCable.server.broadcast('chat_channel', broadcast_data)
+    broadcast_data = { users: party_users }
+    # figure out how to get party code in here...
+    ActionCable.server.broadcast("chat_channel_#{params['room']}", broadcast_data)
   end
 
   def unsubscribed
