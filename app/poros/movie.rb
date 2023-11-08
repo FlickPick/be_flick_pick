@@ -18,7 +18,8 @@ class Movie
 
   ### REFACTOR ME!!! ALSO TEST ME!
   def find_rating(attributes)
-    attributes[:release_dates][:results].find {|result| result[:iso_3166_1] == "US"}[:release_dates].find {|result| result[:certification] != ''}[:certification]
+    # attributes[:release_dates][:results].find {|result| result[:iso_3166_1] == "US"}[:release_dates].find {|result| result[:certification] != ''}[:certification]
+    attributes&.[](:release_dates)&.[](:results).find {|result| result[:iso_3166_1] == "US"}&.[](:release_dates).find {|result| result[:certification] != ''}&.[](:certification)
   end
   
   def find_release_year(attributes)
