@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # root "articles#index"
   namespace :api do
     namespace :v1 do
+      get "/users/omniauth", to: "users#omniauth"
+      
       resources :users
       resources :parties
       resources :temp_users, only: [:create, :index]
@@ -13,7 +15,6 @@ Rails.application.routes.draw do
       resources :liked_movies, only: [:create, :index]
 
       get "/parties/:id/details", to: "parties#details"
-
       mount ActionCable.server => '/cable'
     end
   end

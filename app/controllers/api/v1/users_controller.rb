@@ -29,6 +29,18 @@ class Api::V1::UsersController < ApplicationController
     render json: User.delete(params[:id])
   end
 
+  def omniauth
+    require 'pry'; binding.pry
+
+    if User.find_by(uid: params[:user][:uid], provider: params[:user][:provider])
+      
+    end
+    
+    User.find_or_create_by(uid: params[:user][:uid], provider: params[:user][:provider]) do
+      User.create()
+    end
+  end
+
   private
   
   def user_params
