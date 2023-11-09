@@ -19,16 +19,18 @@ class SelectionChannel < ApplicationCable::Channel
     if most_liked_votes == TempUser.where(party_id: params['party']).count
       most_liked_movie_id = liked_movies_results.max_by {|movie, votes| votes }[0]
 
+      Party.find(params['party']).update(movie_id: most_liked_movie_id)
+
       most_liked_movie_name = MoviesService.new.movie(most_liked_movie_id)[:title]
 
-      broadcast_data = {results: ["#{most_liked_movie_name} has been selected!", "Please proceed to the movie details."]}
+      broadcast_data = {results: ["#{most_liked_movie_name} has been selected!", "Please proceed to Movie Details!"]}
     else
-      liked_movie_titles = liked_movies_results.map do |movie_id|
+      liked_movie_titles = liked_movies_results.map do |movie_id, count|
         title = MoviesService.new.movie(movie_id)[:title]
         title
-      end
-
-      sorted_liked_movies = liked_movies_titles.sort do |(movie1, count1), (movie2, count2)|
+      end.tally
+      
+      sorted_liked_movies = liked_movie_titles.sort do |(movie1, count1), (movie2, count2)|
         if count1 == count2
           movie1 <=> movie2
         else
@@ -36,7 +38,7 @@ class SelectionChannel < ApplicationCable::Channel
         end
       end
   
-      formatted_liked_movies = sorted_liked_movies.map {|movie, count| "#{movie}: #{count} Votes"}
+      formatted_liked_movies = sorted_liked_movies.map {|movie, count| "#{movie}: #{count} Vote(s)"}
   
       broadcast_data = { results: formatted_liked_movies }
     end
