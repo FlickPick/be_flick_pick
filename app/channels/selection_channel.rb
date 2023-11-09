@@ -1,6 +1,49 @@
 class SelectionChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "selection_channel"
+    stream_from "selection_channel_#{params['party']}"
+  end
+
+  def update_results
+    # Rails.logger.info "Data received: #{data.inspect}, Class: #{data.class}"
+    # Explicitly structure the broadcast data
+    # require 'pry';binding.pry
+
+    liked_movies = LikedMovie.joins(:temp_user).where('temp_users.party_id': params['party'])
+    
+    liked_movies_results = liked_movies.map do |movie|
+      movie_id = movie.movie_id
+    end.tally
+
+    most_liked_votes = liked_movies_results.values.max
+
+    if most_liked_votes == TempUser.where(party_id: params['party']).count
+      most_liked_movie_id = liked_movies_results.max_by {|movie, votes| votes }[0]
+
+      most_liked_movie_name = MoviesService.new.movie(most_liked_movie_id)[:title]
+
+      broadcast_data = {results: ["#{most_liked_movie_name} has been selected!", "Please proceed to the movie details."]}
+    else
+      liked_movie_titles = liked_movies_results.map do |movie_id|
+        title = MoviesService.new.movie(movie_id)[:title]
+        title
+      end
+
+      sorted_liked_movies = liked_movies_titles.sort do |(movie1, count1), (movie2, count2)|
+        if count1 == count2
+          movie1 <=> movie2
+        else
+          count2 <=> count1
+        end
+      end
+  
+      formatted_liked_movies = sorted_liked_movies.map {|movie, count| "#{movie}: #{count} Votes"}
+  
+      broadcast_data = { results: formatted_liked_movies }
+    end
+
+
+    # figure out how to get party code in here...
+    ActionCable.server.broadcast("selection_channel_#{params['party']}", broadcast_data)
   end
 
   def unsubscribed
