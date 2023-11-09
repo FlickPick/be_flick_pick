@@ -29,9 +29,18 @@ class Api::V1::UsersController < ApplicationController
     render json: User.delete(params[:id])
   end
 
+  def omniauth
+    if User.find_by(uid: params[:user][:uid], provider: params[:user][:provider])
+      render json: UserSerializer.new(User.where(uid: params[:user][:uid])), status: :accepted
+    else
+      user = User.create(uid: params[:user][:uid], provider: params[:user][:provider], name: params[:user][:info][:name], email: params[:user][:info][:email], password: SecureRandom.hex(10))
+      render json: UserSerializer.new(user), status: :created
+    end
+  end
+
   private
   
   def user_params
-    params.require(:user).permit(:name, :email, :role, :movie_history, :password, :password_confirmation) 
+    params.require(:user).permit(:name, :email, :role, :password, :password_confirmation) 
   end
 end
