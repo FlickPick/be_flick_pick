@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :liked_movies, only: [:create, :index]
 
       get "/parties/:id/details", to: "parties#details"
+
       mount ActionCable.server => '/cable'
     end
   end
