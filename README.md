@@ -1,24 +1,29 @@
-# README
+# FlickPick Internal API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This repository contains the internal API used by the FlickPick front end. The API makes external calls to TMDB (The Movie Database) to fetch movie data, which is then utilized by FlickPick to present movies to users and their watch parties.
 
-Things you may want to cover:
+## Ruby Version
+This project uses Ruby version 3.2.2.
 
-* Ruby version
+## Database Setup
+To initialize the database, run the following commands:
+```bash
+rails db:{drop,create,migrate,seed}
+```
+## Running the Test Suite
 
-* System dependencies
+To run the test suite, execute the following command:
 
-* Configuration
+```bash
+bundle exec rspec
+```
 
-* Database creation
+## Running the Server
 
-* Database initialization
+To run the server, execute the following command:
 
-* How to run the test suite
+```bash
+rails s
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Note that in order to make the Front End tests pass, you must run the backend server in the background.
